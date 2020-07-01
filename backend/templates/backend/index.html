@@ -1,0 +1,49 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'backend/main.css' %}" />
+  </head>
+  <body>
+    <!-- <i class="fa fa-trash" aria-hidden="true"></i>
+    
+    trash icon
+    -->
+    <nav class="top-nav">
+      <h2>TO-DO</h2>
+    </nav>
+    <div class="gap"></div>
+    <div class="container">
+      <div class="search-bar">
+        <form method="POST">
+          {% csrf_token %} {{form.text}}
+          <button class="btn" type="submit">ADD</button>
+        </form>
+      </div>
+      {% if empty %}
+      <p>No todo found</p>
+      {% endif %} {% for todo in todo_list %}
+      <div class="column">
+        <div class="row">
+          <form action="{% url 'delete' todo.id %}" method="POST">
+            {% csrf_token %}
+            <button class="second-btn" type="submit">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </form>
+          <div class="text">
+            <p>{{todo}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
